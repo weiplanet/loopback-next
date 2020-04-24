@@ -58,7 +58,7 @@ In LoopBack 4, the booting tasks are shared between the `@loopback/core`'s
 and the
 [@loopback/boot](./apidocs/apidocs.boot.html) package. Since your application
 will extend `BootMixin` and `Application`, their separation will not be
-apparent to you, and understanding of how they work together as one as not
+apparent to you, and understanding of how they work together as one is not
 mandatory for developing LoopBack 4 projects.
 
 The following are the list of tasks that are performed in the LoopBack 3
@@ -72,7 +72,9 @@ refer to the
 
 There is no `config.json` in LoopBack 4. The application options are passed in
 the constructor of the
-[Application](./apidocs/apidocs.core.application.md) class.
+[Application](./apidocs/apidocs.core.application.md) class. Read more about
+application configuration
+[here](./Application.md#configuring-your-application).
 
 ### 2. Configuration of datasources
 
