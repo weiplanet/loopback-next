@@ -34,21 +34,6 @@ Models are determined from application options or model files,
 and they are attached to their respective datasources. They are then attached
 to the LoopBack Application object.
 
-In the first step, we define all models. In the second step, we attach the models to datasources and the application.
-
-The list of models defined may be longer than the list of models attached:
-
-loopback-boot looks at server/model-config to see which files should be added to the app.
-Then it examines inheritance and mixin configurations, to determine dependencies (which models to add to the list)
-Models are sorted topologically based on inheritance, so that we define parent models before children.
-All models from the list above are defined via model registry.
-Only models specified in server/model-config are added to the app and attached to a datasource (unless dataSource flag is set to null).
-
-loopback-boot also supports universal mode, where the entire loopback application is bundled for browser. In that case, the boot process is split in two parts:
-
-The first step finds out which models (and their parents, etc.) are needed by the app. It creates "instructions" for booting an app, these instructions are compiled into the browser bundle together with model source files (common/models/{model-name}.json).
-The second step is performed in the browser, it processes the instructions from the first step.
-
 #### 4. Setting up middleware
 
 Middleware from the middleware configuration file are resolved and added to the
@@ -93,16 +78,16 @@ LoopBack 4, datasources are defined as TypeScript classes that come with an
 associated JSON configuration file. They all reside in the `src/datasources`
 directory.
 
+{% include note.html content="We are moving away from JSON files for datasource
+configuration. Refer to
+[loopback-next#5000](https://github.com/strongloop/loopback-next/pull/5000)
+for the progress." %}
+
 `BootMixin` resolves the datasources, and attaches them to the application.
 Read more about datasource booter
 [here](./Booting-an-Application.md#controller-booter).
 
 Read more about LoopBack 4 datasource [here](./DataSources.md).
-
-{% include note.html content="We are moving away from JSON files for datasource
-configuration. Refer to
-[loopback-next#5000](https://github.com/strongloop/loopback-next/pull/5000)
-for the progress." %}
 
 ### 3. Definition of models
 
@@ -111,6 +96,11 @@ process in LoopBack 4; Controllers and Repositories are.
 
 Controllers and Repositories import models as regular TypeScript classes since
 they are required at compile time.
+
+{% include note.html content="Booters are LoopBack 4 artifacts that are used
+for modularly adding functionality to the framework. Controllers, Repositories,
+Datasources, Interceptors, etc., are added using booters, custom booters can
+be written for adding new functionality to the framework." %}
 
 #### 4. Setting up middleware
 
