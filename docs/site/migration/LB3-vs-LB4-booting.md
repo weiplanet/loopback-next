@@ -8,11 +8,14 @@ permalink: /doc/en/lb4/LB3-vs-LB4-booting.html
 
 ## Differences between LoopBack 3 and LoopBack 4 booting process
 
+Because of the architectural differences, the booting process is very different
+in LoopBack 3 and LoopBack 4.
+
+### In LoopBack 3
+
 The booting process in LoopBack 3 is handled by
 [loopback-boot](https://github.com/strongloop/loopback-boot),
 which performs the following tasks:
-
-### In LoopBack 3
 
 #### 1. Configuration of application settings
 
