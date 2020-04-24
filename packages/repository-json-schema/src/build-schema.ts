@@ -13,8 +13,8 @@ import {
   resolveType,
 } from '@loopback/repository';
 import debugFactory from 'debug';
-import {JsonSchema} from './index';
 import {inspect} from 'util';
+import {JsonSchema} from './index';
 import {JSON_SCHEMA_KEY} from './keys';
 const debug = debugFactory('loopback:repository-json-schema:build-schema');
 
@@ -414,6 +414,10 @@ export function modelToJsonSchema<T extends object>(
   debug('Model settings', meta.settings);
 
   const title = buildSchemaTitle(ctor, meta, options);
+  // `title` is the unique identity of a schema,
+  // it should be removed from the `options`
+  // when generating the relation or property schemas
+  if (options.title) delete options.title;
 
   if (options.visited[title]) return options.visited[title];
 
@@ -502,15 +506,7 @@ export function modelToJsonSchema<T extends object>(
       const relMeta = meta.relations[r];
       const targetType = resolveType(relMeta.target);
 
-      const targetOptions = {...options};
-      if (targetOptions.title) {
-        // `title` is the unique identity of a schema,
-        // it should be removed from the `options`
-        // when generating the relation schemas
-        delete targetOptions.title;
-      }
-
-      const targetSchema = getJsonSchema(targetType, targetOptions);
+      const targetSchema = getJsonSchema(targetType, options);
       const targetRef = {$ref: `#/definitions/${targetSchema.title}`};
       const propDef = getNavigationalPropertyForRelation(relMeta, targetRef);
 
